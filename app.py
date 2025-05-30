@@ -106,7 +106,7 @@ st.title("🔖 북마크 검색 챗봇")
 st.markdown("Chrome 북마크 내보내기 파일을 업로드하고, 원하는 정보를 가진 URL을 찾아보세요.")
 st.markdown("---")
 
-uploaded_file = st.file_uploader("📁 북마크 HTML 파일 업로드", type=["html"])
+uploaded_file = st.file_uploader("📁 Chrome 북마크 업로드", type=["html"])
 
 if uploaded_file:
     bookmarks = parse_bookmark_html(uploaded_file.getvalue().decode("utf-8"))
