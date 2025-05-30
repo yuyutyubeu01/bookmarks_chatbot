@@ -102,7 +102,7 @@ def search_question_in_bookmarks(question, bookmarks):
 
 st.set_page_config(page_title="Bookmarks Bot", layout="wide")
 
-st.title("🔖 나만의 북마크 기반 ChatBot")
+st.title("🔖 나만의 북마크 Bot")
 st.markdown("Chrome 북마크 내보내기 파일을 업로드하고, 원하는 정보를 가진 URL을 찾아보세요.")
 st.markdown("---")
 
