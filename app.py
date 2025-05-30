@@ -147,7 +147,7 @@ def search_question_in_bookmarks(question, bookmarks):
         if len(relevant_bookmarks) > 30:
             original_count = len(relevant_bookmarks)
             relevant_bookmarks = random.sample(relevant_bookmarks, 30)
-            step1.success(f"✅ {original_count}개의 관련 북마크 30개를 찾았습니다.")
+            step1.success(f"✅ {original_count}개의 관련 북마크 중 유사도가 높은 30개를 찾았습니다.")
         else:
             step1.success(f"✅ {len(relevant_bookmarks)}개의 관련 북마크를 찾았습니다!")
     
