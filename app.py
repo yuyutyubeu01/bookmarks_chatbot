@@ -7,7 +7,7 @@ import random
 
 # 페이지 설정
 st.set_page_config(
-    page_title="북마크 검색 챗봇",
+    page_title="북마크 검색 봇",
     page_icon="🔖",
     layout="wide",
     initial_sidebar_state="collapsed"
