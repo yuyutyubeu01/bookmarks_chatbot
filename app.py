@@ -193,7 +193,9 @@ def search_question_in_bookmarks(question, bookmarks):
 # 메인 UI
 st.markdown('<div class="header-container">', unsafe_allow_html=True)
 st.title("🔖 북마크 검색 봇")
-st.markdown("매번 저장만 해서 잔뜩 쌓여있던 북마크... 이제 원하는 정보를 가진 북마크만 쉽게 찾아보세요!")
+st.markdown("예전에 분명 북마크 해뒀는데... 또 못 찾고 답답하셨죠?
+이제 원하는 정보가 쏙쏙 담긴 북마크만 딱! 쉽게 찾아보세요.
+마음껏 저장하고 찾을 때는 스마트하게 스트레스 없이!")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # 파일 업로드 섹션
