@@ -29,16 +29,6 @@ st.markdown("""
         margin: 0 auto;
     }
     
-    /* 헤더 스타일 */
-    .header-container {
-        background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
-        padding: 2rem;
-        border-radius: 10px;
-        color: white;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-    
     /* 카드 스타일 */
     .stCard {
         border-radius: 15px;
