@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import google.generativeai as genai
 import time
+import random
 
 # 페이지 설정
 st.set_page_config(
@@ -135,14 +136,20 @@ def search_question_in_bookmarks(question, bookmarks):
     with st.container():
         st.markdown("### 🔍 검색 진행 상황")
         step1 = st.empty()
-        step1.info("제목 기반으로 관련 북마크 검색 중...")
+        step1.info("관련 북마크를 검색 중...")
         relevant_bookmarks = find_relevant_bookmarks(question, bookmarks)
         
         if not relevant_bookmarks:
             step1.warning("❌ 질문과 관련된 북마크를 찾을 수 없습니다.")
             return None
         
-        step1.success(f"✅ {len(relevant_bookmarks)}개의 관련 북마크를 찾았습니다!")
+        # 북마크가 30개 이상인 경우 랜덤 샘플링
+        if len(relevant_bookmarks) > 30:
+            original_count = len(relevant_bookmarks)
+            relevant_bookmarks = random.sample(relevant_bookmarks, 30)
+            step1.success(f"✅ {original_count}개의 관련 북마크 30개를 찾았습니다.")
+        else:
+            step1.success(f"✅ {len(relevant_bookmarks)}개의 관련 북마크를 찾았습니다!")
     
     # 2단계: 북마크 내용 수집
     with st.container():
@@ -154,7 +161,7 @@ def search_question_in_bookmarks(question, bookmarks):
         for idx, bookmark in enumerate(relevant_bookmarks):
             progress = (idx + 1) / len(relevant_bookmarks)
             progress_bar.progress(progress)
-            status_container.info(f"🌐 분석 중: {bookmark['title']}")
+            status_container.info(f"🌐 분석 중: {bookmark['title']} ({idx + 1}/{len(relevant_bookmarks)})")
             
             content = fetch_webpage_content(bookmark['url'], status_container)
             combined_info += f"[{bookmark['title']}]({bookmark['url']}): {content[:1000]}\n"
@@ -174,6 +181,7 @@ def search_question_in_bookmarks(question, bookmarks):
 
         아래는 북마크에 저장된 웹페이지 정보입니다.
         사용자의 질문과 가장 관련 있는 URL들을 설명과 함께 추천해주세요.
+        {f'(전체 {len(relevant_bookmarks)}개 중 랜덤 샘플링된 결과입니다)' if len(relevant_bookmarks) == 30 else ''}
 
         {combined_info}
         """
@@ -184,13 +192,13 @@ def search_question_in_bookmarks(question, bookmarks):
 
 # 메인 UI
 st.markdown('<div class="header-container">', unsafe_allow_html=True)
-st.title("🔖 북마크 검색 챗봇")
-st.markdown("Chrome에서 내보낸 북마크 HTML 파일을 업로드하고, 원하는 정보를 가진 URL을 찾아보세요.")
+st.title("🔖 북마크 검색 봇")
+st.markdown("매번 저장만 해서 잔뜩 쌓여있던 북마크... 이제 원하는 정보를 가진 북마크만 쉽게 찾아보세요!")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # 파일 업로드 섹션
 with st.container():
-    uploaded_file = st.file_uploader("📁 북마크 HTML 파일 업로드", type=["html"])
+    uploaded_file = st.file_uploader("📁 북마크 파일 업로드", type=["html"])
 
 if uploaded_file:
     bookmarks = parse_bookmark_html(uploaded_file.getvalue().decode("utf-8"))
@@ -210,4 +218,4 @@ if uploaded_file:
                     st.markdown(answer, unsafe_allow_html=True)
                     st.markdown('</div>', unsafe_allow_html=True)
 else:
-    st.markdown('<div class="warning-message">Chrome 북마크 HTML 파일을 업로드해주세요.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="warning-message">Chrome 북마크 파일을 업로드해주세요.</div>', unsafe_allow_html=True)
