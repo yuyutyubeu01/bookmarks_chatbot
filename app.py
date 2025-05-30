@@ -57,7 +57,7 @@ def find_relevant_bookmarks(question, bookmarks):
 
 def search_question_in_bookmarks(question, bookmarks):
     # 1단계: 제목 기반 관련 북마크 찾기
-    st.write("🔍 제목 기반으로 관련 북마크 검색 중...")
+    st.write("🔍 관련 정보가 있을 가능성이 높은 북마크를 찾는 중...")
     relevant_bookmarks = find_relevant_bookmarks(question, bookmarks)
     
     if not relevant_bookmarks:
@@ -68,7 +68,7 @@ def search_question_in_bookmarks(question, bookmarks):
     st.success(f"✅ {len(relevant_bookmarks)}개의 관련 북마크를 찾았습니다!")
     
     # 3단계: 각 북마크의 내용 수집
-    st.write("📑 북마크 내용을 수집하는 중...")
+    st.write("📑 북마크 내용을 수집 중...")
     progress_bar = st.progress(0)
     status_container = st.empty()
     
@@ -100,9 +100,9 @@ def search_question_in_bookmarks(question, bookmarks):
     response = model.generate_content(prompt)
     return response.text
 
-st.set_page_config(page_title="북마크 기반 검색 챗봇", layout="wide")
+st.set_page_config(page_title="Bookmarks Bot", layout="wide")
 
-st.title("🔖 북마크 검색 챗봇")
+st.title("🔖 나만의 북마크 기반 ChatBot")
 st.markdown("Chrome 북마크 내보내기 파일을 업로드하고, 원하는 정보를 가진 URL을 찾아보세요.")
 st.markdown("---")
 
@@ -114,11 +114,11 @@ if uploaded_file:
     
     question = st.text_input("💬 어떤 정보를 찾고 싶으신가요?")
     if question and bookmarks:
-        with st.spinner("🔎 북마크를 검색하고 분석하는 중..."):
+        with st.spinner("🔎 관련 북마크를 검색하고 분석하는 중..."):
             answer = search_question_in_bookmarks(question, bookmarks)
             if answer:
                 st.markdown("---")
                 st.subheader("📎 검색 결과")
                 st.markdown(answer, unsafe_allow_html=True)
 else:
-    st.warning("Chrome 북마크 HTML 파일을 업로드해주세요.")
+    st.warning("Chrome 북마크 파일을 업로드해주세요.")
